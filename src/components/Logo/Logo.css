@@ -1,0 +1,13 @@
+.Logo {
+  
+  position:absolute;
+  top:0;
+  left:5px;
+height: 100%;
+box-sizing: border-box;
+}
+
+.Logo img {
+  height: 100%;
+  margin-top: 10%;
+}

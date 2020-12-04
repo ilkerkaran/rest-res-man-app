@@ -1,0 +1,50 @@
+{
+  "extends": [ 
+    "plugin:react/recommended",
+    "airbnb"
+],
+  "env": {
+    "browser": true,
+    "commonjs": true,
+    "es6": true,
+    "jest": true,
+    "node": true
+  },
+  "parser": "babel-eslint",
+  "parserOptions": {
+    "ecmaFeatures": {
+      "jsx": true,
+      "modules": true
+    },
+    "ecmaVersion": 2018,
+    "sourceType": "module"
+  },
+
+  "rules": {
+    "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }],
+    "semi":["warn","never"],
+    "max-len": [
+      "warn",
+      {
+        "code": 120,
+        "tabWidth": 2,
+        "comments": 120,
+        "ignoreComments": false,
+        "ignoreTrailingComments": true,
+        "ignoreUrls": true,
+        "ignoreStrings": true,
+        "ignoreTemplateLiterals": true,
+        "ignoreRegExpLiterals": true
+      }
+    ],
+    "no-use-before-define": "off",
+    "no-useless-constructor": "warn",
+    "eqeqeq":"off",
+    "comma-dangle": [
+      "error",
+      "never"
+    ],
+    "no-unused-vars":"warn",
+    "react/forbid-prop-types":"warn"
+  }
+}
