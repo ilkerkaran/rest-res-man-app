@@ -10,7 +10,8 @@ import {
   signOutSuccess,
   signOutFailure,
   signUpSuccess,
-  signUpFailure
+  signUpFailure,
+  getRestaurant
 } from '../actions/actionCreators'
 
 import {
@@ -29,6 +30,7 @@ export function* getSnapshotFromUserAuth(userAuth, additionalData) {
     )
     const userSnapshot = yield userRef.get()
     yield put(signInSuccess({ id: userSnapshot.id, ...userSnapshot.data() }))
+    yield put(getRestaurant({ id: userSnapshot.id, ...userSnapshot.data() }))
   } catch (error) {
     yield put(signInFailure(error))
   }
@@ -63,6 +65,7 @@ export function* isUserAuthenticated() {
 }
 
 export function* signOut() {
+  console.log('signOut saga')
   try {
     yield auth.signOut()
     yield put(signOutSuccess())
@@ -82,10 +85,6 @@ export function* signUp({ payload: { email, password, displayName } }) {
 
 export function* signInAfterSignUp({ payload: { user, additionalData } }) {
   yield getSnapshotFromUserAuth(user, additionalData)
-}
-
-export function* onGoogleSignInStart() {
-  yield takeLatest(actionTypes.GOOGLE_SIGN_IN_START, signInWithGoogle)
 }
 
 export function* onEmailSignInStart() {
@@ -110,7 +109,6 @@ export function* onSignUpSuccess() {
 
 export function* userSagas() {
   yield all([
-    call(onGoogleSignInStart),
     call(onEmailSignInStart),
     call(onCheckUserSession),
     call(onSignOutStart),

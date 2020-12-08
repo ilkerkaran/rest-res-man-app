@@ -2,29 +2,41 @@ import * as actionTypes from '../actions/actionTypes'
 
 const INITIAL_STATE = {
   currentUser: null,
-  error: null
+  error: null,
+  loading: false
 }
 
 const userReducer = (state = INITIAL_STATE, action) => {
   switch (action.type) {
-    case actionTypes.LOGIN_SUCCESS:
+    case actionTypes.EMAIL_SIGN_IN_START:
+      return {
+        ...state,
+        currentUser: null,
+        error: null,
+        loading: true
+      }
+    case actionTypes.SIGN_IN_SUCCESS:
       return {
         ...state,
         currentUser: action.payload,
-        error: null
+        error: null,
+        loading: false
       }
     case actionTypes.SIGN_OUT_SUCCESS:
       return {
         ...state,
         currentUser: null,
-        error: null
+        error: null,
+
+        loading: false
       }
-    case actionTypes.LOGIN_FAILURE:
+    case actionTypes.SIGN_IN_FAILURE:
     case actionTypes.SIGN_OUT_FAILURE:
     case actionTypes.SIGN_UP_FAILURE:
       return {
         ...state,
-        error: action.payload
+        error: action.payload,
+        loading: false
       }
     default:
       return state

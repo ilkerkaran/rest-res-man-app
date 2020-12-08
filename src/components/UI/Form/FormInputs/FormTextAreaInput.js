@@ -1,6 +1,6 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import { inputConfigTypes } from '../../../../propTypes/types';
+import React from 'react'
+import PropTypes from 'prop-types'
+import { inputConfigTypes } from '../../../../propTypes/types'
 
 const textArea = ({ className, inputConfig }) => (
   <div className={className}>
@@ -15,11 +15,11 @@ const textArea = ({ className, inputConfig }) => (
       && inputConfig.errors[inputConfig.inputName].message}
     </div>
   </div>
-);
+)
 
-export default textArea;
+export default textArea
 
 textArea.propTypes = {
   className: PropTypes.string,
   ...inputConfigTypes
-};
+}

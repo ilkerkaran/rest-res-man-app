@@ -1,14 +1,19 @@
+import { combineReducers } from 'redux'
+import { persistReducer } from 'redux-persist'
+import storage from 'redux-persist/lib/storage'
 import restaurantReducer from './restaurantReducer'
 import tableReducer from './tableReducer'
-import authReducer from './authReducer'
+import userReducer from './userReducer'
 
-const initialState = {
+const persistConfig = {
+  key: 'root',
+  storage
 }
 
-const reducer = (state = initialState, action) => ({
-  rest: restaurantReducer(state.rest, action),
-  tables: tableReducer(state.tables, action),
-  auth: authReducer(state.auth, action)
+const rootReducer = combineReducers({
+  user: userReducer,
+  restaurant: restaurantReducer,
+  tables: tableReducer
 })
 
-export default reducer
+export default persistReducer(persistConfig, rootReducer)

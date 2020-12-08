@@ -12,9 +12,9 @@ import { store, persistor } from './store'
 const app = (
   <Provider store={store}>
     <BrowserRouter basename={process.env.BASE_PATH}>
-      <PersistGate persistor={persistor}>
-        <App />
-      </PersistGate>
+
+      <App />
+
     </BrowserRouter>
   </Provider>
 )

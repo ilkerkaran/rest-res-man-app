@@ -1,8 +1,8 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import { FormControl, InputLabel, OutlinedInput } from '@material-ui/core';
-import { makeStyles } from '@material-ui/core/styles';
-import { inputConfigTypes } from '../../../../propTypes/types';
+import React from 'react'
+import PropTypes from 'prop-types'
+import { FormControl, InputLabel, OutlinedInput } from '@material-ui/core'
+import { makeStyles } from '@material-ui/core/styles'
+import { inputConfigTypes } from '../../../../propTypes/types'
 
 const useStyles = makeStyles((theme) => ({
   formControl: {
@@ -10,7 +10,7 @@ const useStyles = makeStyles((theme) => ({
     minWidth: 120,
     width: '80%'
   }
-}));
+}))
 const Password = ({ className, inputConfig }) => {
   const classes = useStyles(); return (
     <div className={className}>
@@ -37,16 +37,16 @@ const Password = ({ className, inputConfig }) => {
       && inputConfig.errors[inputConfig.inputName].message}
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default Password;
+export default Password
 
 Password.propTypes = {
   className: PropTypes.string,
   ...inputConfigTypes
-};
+}
 
 Password.defaultProps = {
   className: ''
-};
+}

@@ -1,16 +1,16 @@
 import React, { useContext } from 'react'
-
+import { useSelector } from 'react-redux'
 import './UserInfo.css'
 
 const UserInfo = () => {
-  const user = 'kek'
-  return (user
+  const { currentUser } = useSelector((state) => state.user)
+  return (currentUser
     ? (
       <div className="UserInfo">
         <p>
           Welcome,
           {' '}
-          {user.username}
+          {currentUser.email}
         </p>
       </div>
     ) : null

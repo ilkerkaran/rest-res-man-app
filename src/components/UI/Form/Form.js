@@ -1,13 +1,13 @@
-import React from 'react';
-import { useForm } from 'react-hook-form';
-import PropTypes from 'prop-types';
-import { Box, Button, Typography } from '@material-ui/core';
-import { makeStyles } from '@material-ui/core/styles';
-import { inputConfigsTypes } from '../../../propTypes/types';
-import Select from './FormInputs/FormSelectInput';
-import Text from './FormInputs/FormTextInput';
-import TextArea from './FormInputs/FormTextAreaInput';
-import Password from './FormInputs/FormPasswordInput';
+import React from 'react'
+import { useForm } from 'react-hook-form'
+import PropTypes from 'prop-types'
+import { Box, Button, Typography } from '@material-ui/core'
+import { makeStyles } from '@material-ui/core/styles'
+import { inputConfigsTypes } from '../../../propTypes/types'
+import Select from './FormInputs/FormSelectInput'
+import Text from './FormInputs/FormTextInput'
+import TextArea from './FormInputs/FormTextAreaInput'
+import Password from './FormInputs/FormPasswordInput'
 
 const useStyles = makeStyles({
   root: {
@@ -41,19 +41,19 @@ const useStyles = makeStyles({
     textAlign: 'center',
     boxSizing: 'border-box'
   }
-});
+})
 
 const Form = ({
   title, onSubmit, inputConfigs, submitButtonText, onDiscard, discardButtonText
 }) => {
   const {
     register, handleSubmit, errors, formState, control
-  } = useForm({ mode: 'onBlur', reValidateMode: 'onBlur' });
+  } = useForm({ mode: 'onBlur', reValidateMode: 'onBlur' })
 
-  const classes = useStyles();
+  const classes = useStyles()
   const onSubmitHandler = (data) => {
-    onSubmit(data);
-  };
+    onSubmit(data)
+  }
   const formInputs = inputConfigs && inputConfigs.map((conf) => {
     switch (conf.inputType) {
       case 'text':
@@ -63,7 +63,7 @@ const Form = ({
             key={conf.inputName}
             inputConfig={{ ...conf, register, errors }}
           />
-        );
+        )
       case 'password':
         return (
           <Password
@@ -71,7 +71,7 @@ const Form = ({
             key={conf.inputName}
             inputConfig={{ ...conf, register, errors }}
           />
-        );
+        )
       case 'select':
         return (
           <Select
@@ -80,7 +80,7 @@ const Form = ({
             control={control}
             inputConfig={{ ...conf, register, errors }}
           />
-        );
+        )
       case 'textArea':
         return (
           <TextArea
@@ -88,7 +88,7 @@ const Form = ({
             key={conf.inputName}
             inputConfig={{ ...conf, register, errors }}
           />
-        );
+        )
       default:
         return (
           <Text
@@ -96,9 +96,9 @@ const Form = ({
             key={conf.inputName}
             inputConfig={{ ...conf, register }}
           />
-        );
+        )
     }
-  });
+  })
   return (
     <Box className={classes.root}>
       <Typography variant="h4" gutterBottom>
@@ -134,10 +134,10 @@ const Form = ({
         </Box>
       </form>
     </Box>
-  );
-};
+  )
+}
 
-export default Form;
+export default Form
 
 Form.propTypes = {
   title: PropTypes.string.isRequired,
@@ -146,9 +146,9 @@ Form.propTypes = {
   onSubmit: PropTypes.func.isRequired,
   onDiscard: PropTypes.func,
   discardButtonText: PropTypes.string
-};
+}
 
 Form.defaultProps = {
   onDiscard: null,
   discardButtonText: null
-};
+}

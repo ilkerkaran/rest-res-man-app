@@ -1,11 +1,13 @@
 import React, { useContext } from 'react'
+import { useSelector } from 'react-redux'
+
 import NavItem from './NavigationItem/NavigationItem'
 import './NavigationItems.css'
 import UserInfo from '../UserInfo/UserInfo'
 import Logo from '../../Logo/Logo'
 
 const NavigaitonItems = () => {
-  const user = 'a'
+  const { currentUser } = useSelector((state) => state.user)
   const securedNavItems = (
     <>
       <NavItem link="/restaurant">Restaurant</NavItem>
@@ -19,7 +21,7 @@ const NavigaitonItems = () => {
     </>
   )
   let navContent
-  if (user && user.role) { navContent = securedNavItems } else { navContent = anonymousNavItems }
+  if (currentUser) { navContent = securedNavItems } else { navContent = anonymousNavItems }
 
   return (
     <>

@@ -1,8 +1,8 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import { FormControl, InputLabel, OutlinedInput } from '@material-ui/core';
-import { makeStyles } from '@material-ui/core/styles';
-import { inputConfigTypes } from '../../../../propTypes/types';
+import React from 'react'
+import PropTypes from 'prop-types'
+import { FormControl, InputLabel, OutlinedInput } from '@material-ui/core'
+import { makeStyles } from '@material-ui/core/styles'
+import { inputConfigTypes } from '../../../../propTypes/types'
 
 const useStyles = makeStyles((theme) => ({
   formControl: {
@@ -10,10 +10,10 @@ const useStyles = makeStyles((theme) => ({
     minWidth: 120,
     width: '80%'
   }
-}));
+}))
 
 const Text = ({ className, inputConfig }) => {
-  const classes = useStyles();
+  const classes = useStyles()
   return (
     <div className={className}>
       <FormControl variant="outlined" className={classes.formControl}>
@@ -36,16 +36,16 @@ const Text = ({ className, inputConfig }) => {
       </div>
 
     </div>
-  );
-};
+  )
+}
 
-export default Text;
+export default Text
 
 Text.propTypes = {
   className: PropTypes.string,
   ...inputConfigTypes
-};
+}
 
 Text.defaultProps = {
   className: ''
-};
+}

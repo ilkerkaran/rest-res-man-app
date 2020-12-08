@@ -6,7 +6,9 @@ import Form from '../components/UI/Form/Form'
 import Spinner from '../components/UI/Spinner/Spinner'
 import withErrorHandler from '../hoc/withErrorHandler'
 import axios from '../axios'
-import { login as loginAction, signUp as signUpAction } from '../store/actions/actionCreators'
+import {
+  emailSignInStart, signUpStart
+} from '../store/actions/actionCreators'
 
 const auth = ({
   isSignUp
@@ -14,18 +16,16 @@ const auth = ({
   // state
   const {
     loading,
-    token,
+    currentUser,
     redirectAfterSignin
-  } = useSelector((state) => state.auth)
+  } = useSelector((state) => state.user)
 
   // dispatch
   const dispatch = useDispatch()
   const onSignIn = (username,
-    password) => dispatch(loginAction(username,
-    password))
+    password) => dispatch(emailSignInStart({ email: username, password }))
   const onSignUp = (username,
-    password) => dispatch(signUpAction(username,
-    password))
+    password) => dispatch(signUpStart({ email: username, password }))
 
   const formInputConfig = [
     {
@@ -61,11 +61,11 @@ const auth = ({
     </div>
   )
 
-  const redirect = (<Redirect to={redirectAfterSignin} />)
-  return (token ? redirect : signinForm)
+  const redirect = (<Redirect to="/restaurant" />)
+  return (currentUser ? redirect : signinForm)
 }
 
-export default withRouter(withErrorHandler(auth, axios))
+export default auth
 
 auth.propTypes = {
   isSignUp: PropTypes.bool,

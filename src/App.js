@@ -9,8 +9,9 @@ import { Box } from '@material-ui/core'
 import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles'
 import * as actions from './store/actions/actionCreators'
 import Restaurant from './views/Restaurant'
-import EnterRestaurant from './views/EnterRestaurant'
+import SetRestaurant from './views/SetRestaurant'
 import Layout from './containers/Layout/Layout'
+import logout from './views/Logout'
 
 const theme = createMuiTheme({
   palette: {
@@ -22,12 +23,15 @@ const theme = createMuiTheme({
 const Auth = React.lazy(() => import('./views/Auth'))
 function App() {
   const { currentUser } = useSelector((state) => state.user)
+  const { restaurant } = useSelector((state) => state.restaurant)
+  console.log('rest', restaurant)
   const dispatch = useDispatch()
-  const checkIsAuthenticated = () => dispatch(actions.checkIsAuthenticated())
+  const checkIsAuthenticated = () => dispatch(actions.checkUserSession())
   const securedRoutes = (
     <>
-      <Route path="/set-restaurant" exact component={EnterRestaurant} />
       <Route path="/restaurant" exact component={Restaurant} />
+      <Route path="/logout" exact component={logout} />
+      <Redirect to="/restaurant" />
     </>
   )
 
@@ -35,11 +39,12 @@ function App() {
     <Suspense fallback={<div>Loading...</div>}>
       <Route path="/login" render={() => <Auth isSignUp={false} />} />
       <Route path="/signup" render={() => <Auth isSignUp />} />
+      <Redirect to="/login" />
     </Suspense>
   )
   useEffect(() => {
     checkIsAuthenticated()
-  }, [])
+  }, [dispatch])
   return (
     <MuiThemeProvider theme={theme}>
       <Layout>

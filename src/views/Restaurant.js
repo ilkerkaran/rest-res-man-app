@@ -4,18 +4,17 @@ import { useDispatch, useSelector } from 'react-redux'
 import { Redirect } from 'react-router-dom'
 
 import * as actions from '../store/actions/actionCreators'
+import SetRestaurant from './SetRestaurant'
 
 const Restaurant = () => {
   const dispatch = useDispatch()
-  const restaurant = useSelector((state) => state.restaurant)
-
+  const { restaurant, loading } = useSelector((state) => state.restaurant)
   useEffect(() => {
     dispatch(actions.getRestaurant)
   }, [])
-  console.log('restaurant view')
   return restaurant
     ? <h1>Restaurant view</h1>
-    : <Redirect to="/set-restaurant" />
+    : <SetRestaurant />
 }
 
 export default Restaurant

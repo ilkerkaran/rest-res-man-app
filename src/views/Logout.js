@@ -1,23 +1,20 @@
 import React, { useEffect } from 'react'
-import { useDispatch } from 'react-redux'
-import { Redirect } from 'react-router-dom'
+import { useDispatch, useSelector } from 'react-redux'
+import { Redirect, useHistory } from 'react-router-dom'
 import PropTypes from 'prop-types'
-import { logout as logoutAction } from '../store/actions/actionCreators'
+import { signOutStart } from '../store/actions/actionCreators'
+import Spinner from '../components/UI/Spinner/Spinner'
 
-const logout = () => {
+const Logout = () => {
+  const { currentUser } = useSelector((state) => state.user)
   const dispatch = useDispatch()
-  const onLogout = () => dispatch(logoutAction())
-
+  const history = useHistory()
+  if (!currentUser) history.push('/login')
   useEffect(() => {
+    dispatch(signOutStart())
   }, [])
 
-  onLogout()
-  return (<Redirect to="/restaurant" />)
+  return <Redirect to="/login" />
 }
 
-export default logout
-
-logout.propTypes = {
-  onLogout: PropTypes.func
-
-}
+export default Logout
