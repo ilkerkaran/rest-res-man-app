@@ -20,11 +20,8 @@ const SetRestaurant = () => {
   ]
 
   const onSubmitClick = (formData) => {
-    console.log('formData', formData)
     dispatch(setRestaurant(currentUser.email, formData.restaurant))
   }
-  console.log('rest', restaurant, restaurantLoading)
-  console.log('user', currentUser)
 
   const form = restaurantLoading ? <Spinner /> : (
     <div className="ContactData">

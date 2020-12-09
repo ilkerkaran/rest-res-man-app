@@ -13,7 +13,8 @@ import {
   getRestaurant,
   setRestaurant,
   setRestaurantSuccess,
-  signOutSuccess
+  signOutSuccess,
+  clearRestaurant
 } from '../actions/actionCreators'
 
 import {
@@ -32,7 +33,6 @@ export function* getSnapshotFromUserAuth(userAuth, additionalData) {
     )
     const userSnapshot = yield userRef.get()
     yield put(signInSuccess({ id: userSnapshot.id, ...userSnapshot.data() }))
-    yield put(getRestaurant({ id: userSnapshot.id, ...userSnapshot.data() }))
   } catch (error) {
     yield put(signInFailure(error))
   }
@@ -70,7 +70,7 @@ export function* signOut() {
   console.log('signOut saga')
   try {
     yield auth.signOut()
-    yield put(setRestaurantSuccess())
+    yield put(clearRestaurant())
     yield put(signOutSuccess())
   } catch (error) {
     yield put(signOutFailure(error))

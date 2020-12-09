@@ -40,6 +40,10 @@ export const setRestaurantSuccess = (rest) => ({
   payload: { restaurant: rest && { ...rest } }
 })
 
+export const clearRestaurant = () => ({
+  type: actionTypes.CLEAR_RESTAURANT
+})
+
 const setRestaurantFail = (error) => ({
   type: actionTypes.POST_RESTAURANT_FAIL,
   payload: { error }

@@ -10,7 +10,7 @@ const UserInfo = () => {
         <p>
           Welcome,
           {' '}
-          {currentUser.email}
+          {currentUser.displayName}
         </p>
       </div>
     ) : null

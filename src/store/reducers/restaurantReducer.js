@@ -6,6 +6,13 @@ const initialState = {
 
 const restaurantReducer = (state = initialState, action) => {
   switch (action.type) {
+    case actionTypes.CLEAR_RESTAURANT:
+      return {
+        ...state,
+        restaurant: null,
+        error: null,
+        loading: false
+      }
     case actionTypes.GET_RESTAURANT_START:
       return {
         ...state,
@@ -37,6 +44,7 @@ const restaurantReducer = (state = initialState, action) => {
     case actionTypes.POST_RESTAURANT_FAIL:
       return {
         ...state,
+        restaurant: null,
         error: action.payload.error,
         loading: false
       }

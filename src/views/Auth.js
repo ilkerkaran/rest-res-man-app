@@ -16,18 +16,17 @@ const auth = ({
   // state
   const {
     loading,
-    currentUser,
-    redirectAfterSignin
+    currentUser
   } = useSelector((state) => state.user)
 
   // dispatch
   const dispatch = useDispatch()
   const onSignIn = (username,
     password) => dispatch(emailSignInStart({ email: username, password }))
-  const onSignUp = (username,
-    password) => dispatch(signUpStart({ email: username, password }))
+  const onSignUp = (username, displayName,
+    password) => dispatch(signUpStart({ email: username, displayName, password }))
 
-  const formInputConfig = [
+  const signInFormInputConfig = [
     {
       inputType: 'email',
       inputName: 'email',
@@ -41,10 +40,20 @@ const auth = ({
       isRequired: true
     }
   ]
+  const signUpFormInputConfig = [
+    {
+      inputType: 'text',
+      inputName: 'displayName',
+      label: 'Name',
+      isRequired: true
+    },
+    ...signInFormInputConfig
+  ]
 
   const onSubmitClick = (formData) => {
+    console.log('onSubmitClick', formData)
     if (isSignUp) {
-      onSignUp(formData.email, formData.password)
+      onSignUp(formData.email, formData.displayName, formData.password)
     } else {
       onSignIn(formData.email, formData.password)
     }
@@ -54,8 +63,9 @@ const auth = ({
       <Form
         title="Welcome"
         submitButtonText={isSignUp ? 'Sign Up!' : 'Login!'}
-        inputConfigs={formInputConfig}
+        inputConfigs={isSignUp ? signUpFormInputConfig : signInFormInputConfig}
         onSubmit={onSubmitClick}
+        disabled={loading}
       />
       <br />
     </div>

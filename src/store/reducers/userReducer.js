@@ -8,6 +8,13 @@ const INITIAL_STATE = {
 
 const userReducer = (state = INITIAL_STATE, action) => {
   switch (action.type) {
+    case actionTypes.SIGN_UP_START:
+      return {
+        ...state,
+        currentUser: null,
+        error: null,
+        loading: true
+      }
     case actionTypes.EMAIL_SIGN_IN_START:
       return {
         ...state,
