@@ -13,6 +13,11 @@ const restaurantReducer = (state = initialState, action) => {
         error: null,
         loading: false
       }
+    case actionTypes.CLEAR_RESTAURANT_ERROR:
+      return {
+        ...state,
+        error: null
+      }
     case actionTypes.GET_RESTAURANT_START:
       return {
         ...state,

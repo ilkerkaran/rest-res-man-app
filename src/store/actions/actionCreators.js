@@ -107,3 +107,11 @@ export const signUpFailure = (error) => ({
   type: actionTypes.SIGN_UP_FAILURE,
   payload: error
 })
+
+export const clearUserError = () => ({
+  type: actionTypes.CLEAR_USER_ERROR
+})
+
+export const clearRestaurantError = () => ({
+  type: actionTypes.CLEAR_RESTAURANT_ERROR
+})

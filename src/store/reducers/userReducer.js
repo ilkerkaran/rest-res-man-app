@@ -37,6 +37,11 @@ const userReducer = (state = INITIAL_STATE, action) => {
 
         loading: false
       }
+    case actionTypes.CLEAR_USER_ERROR:
+      return {
+        ...state,
+        error: null
+      }
     case actionTypes.SIGN_IN_FAILURE:
     case actionTypes.SIGN_OUT_FAILURE:
     case actionTypes.SIGN_UP_FAILURE:

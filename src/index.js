@@ -8,13 +8,14 @@ import App from './App'
 import reportWebVitals from './reportWebVitals'
 
 import { store, persistor } from './store'
+import ErrorHandler from './hoc/ErrorHandler'
 
 const app = (
   <Provider store={store}>
     <BrowserRouter basename={process.env.BASE_PATH}>
-
-      <App />
-
+      <ErrorHandler>
+        <App />
+      </ErrorHandler>
     </BrowserRouter>
   </Provider>
 )
