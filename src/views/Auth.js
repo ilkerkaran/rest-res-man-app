@@ -62,6 +62,7 @@ const auth = ({
   )
 
   const redirect = (<Redirect to="/restaurant" />)
+
   return (currentUser ? redirect : signinForm)
 }
 

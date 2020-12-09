@@ -24,11 +24,11 @@ const Auth = React.lazy(() => import('./views/Auth'))
 function App() {
   const { currentUser } = useSelector((state) => state.user)
   const { restaurant } = useSelector((state) => state.restaurant)
-  console.log('rest', restaurant)
   const dispatch = useDispatch()
   const checkIsAuthenticated = () => dispatch(actions.checkUserSession())
   const securedRoutes = (
     <>
+
       <Route path="/restaurant" exact component={Restaurant} />
       <Route path="/logout" exact component={logout} />
       <Redirect to="/restaurant" />
@@ -37,19 +37,18 @@ function App() {
 
   const anonymousRoutes = (
     <Suspense fallback={<div>Loading...</div>}>
-      <Route path="/login" render={() => <Auth isSignUp={false} />} />
-      <Route path="/signup" render={() => <Auth isSignUp />} />
-      <Redirect to="/login" />
+      <Route path="/login" exact render={() => <Auth isSignUp={false} />} />
+      <Route path="/signup" exact render={() => <Auth isSignUp />} />
     </Suspense>
   )
   useEffect(() => {
     checkIsAuthenticated()
-  }, [dispatch])
+  }, [])
   return (
     <MuiThemeProvider theme={theme}>
       <Layout>
-        {currentUser ? securedRoutes : null}
-        {anonymousRoutes}
+
+        {currentUser ? securedRoutes : anonymousRoutes}
       </Layout>
     </MuiThemeProvider>
 

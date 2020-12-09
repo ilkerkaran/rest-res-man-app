@@ -9,12 +9,13 @@ const Logout = () => {
   const { currentUser } = useSelector((state) => state.user)
   const dispatch = useDispatch()
   const history = useHistory()
-  if (!currentUser) history.push('/login')
   useEffect(() => {
     dispatch(signOutStart())
   }, [])
-
-  return <Redirect to="/login" />
+  useEffect(() => {
+    history.push('/login')
+  })
+  return <h4>You are logging out...</h4>
 }
 
 export default Logout

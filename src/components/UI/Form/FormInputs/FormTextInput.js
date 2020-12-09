@@ -27,7 +27,7 @@ const Text = ({ className, inputConfig }) => {
           rows={inputConfig.multiline ? 4 : null}
           label={inputConfig.label}
           defaultValue={inputConfig.value}
-          inputRef={inputConfig.isRequired ? inputConfig.register({ required: `${inputConfig.label} is required` }) : inputConfig.register}
+          inputRef={inputConfig.isRequired ? inputConfig.register({ required: `${inputConfig.label || 'field'} is required` }) : inputConfig.register}
         />
       </FormControl>
       <div style={{ color: 'darkred' }}>

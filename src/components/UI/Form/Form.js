@@ -44,7 +44,7 @@ const useStyles = makeStyles({
 })
 
 const Form = ({
-  title, onSubmit, inputConfigs, submitButtonText, onDiscard, discardButtonText
+  title, onSubmit, inputConfigs, submitButtonText, onDiscard, discardButtonText, disabled
 }) => {
   const {
     register, handleSubmit, errors, formState, control
@@ -127,7 +127,7 @@ const Form = ({
             color="primary"
             variant="contained"
             type="submit"
-            disabled={formState.isSubmitting}
+            disabled={disabled}
           >
             {submitButtonText || 'Submit'}
           </Button>
@@ -145,10 +145,12 @@ Form.propTypes = {
   ...inputConfigsTypes,
   onSubmit: PropTypes.func.isRequired,
   onDiscard: PropTypes.func,
-  discardButtonText: PropTypes.string
+  discardButtonText: PropTypes.string,
+  disabled: PropTypes.bool
 }
 
 Form.defaultProps = {
   onDiscard: null,
-  discardButtonText: null
+  discardButtonText: null,
+  disabled: false
 }

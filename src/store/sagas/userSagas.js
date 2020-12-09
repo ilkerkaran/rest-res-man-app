@@ -7,11 +7,13 @@ import * as actionTypes from '../actions/actionTypes'
 import {
   signInSuccess,
   signInFailure,
-  signOutSuccess,
   signOutFailure,
   signUpSuccess,
   signUpFailure,
-  getRestaurant
+  getRestaurant,
+  setRestaurant,
+  setRestaurantSuccess,
+  signOutSuccess
 } from '../actions/actionCreators'
 
 import {
@@ -68,6 +70,7 @@ export function* signOut() {
   console.log('signOut saga')
   try {
     yield auth.signOut()
+    yield put(setRestaurantSuccess())
     yield put(signOutSuccess())
   } catch (error) {
     yield put(signOutFailure(error))

@@ -1,6 +1,5 @@
 /* eslint-disable import/prefer-default-export */
 import * as actionTypes from './actionTypes'
-import { getRestaurant as getRestaurantService } from '../../services/restaurantService'
 import { firestore } from '../../firebase/firebase.utils'
 
 const getRestaurantByUsernameStart = () => ({
@@ -18,21 +17,44 @@ const getRestaurantByUsernameFail = (error) => ({
 })
 
 export const getRestaurant = (email) => (dispatch) => {
+  const collectionRef = firestore.collection('restaurants').doc(email)
   dispatch(getRestaurantByUsernameStart())
-  {
-    const collectionRef = firestore.collection('restaurants').where('email', '==', email)
-    dispatch(getRestaurantByUsernameStart())
+  collectionRef
+    .get()
+    .then((data) => {
+      console.log('this is restDoc', data.data())
 
-    collectionRef
-      .get()
-      .then((snapshot) => {
-        const restDoc = snapshot.docs[0]
-        console.log('this is restDoc', restDoc)
-        if (!restDoc) { dispatch(getRestaurantByUsernameSuccess()) }
-        dispatch(getRestaurantByUsernameSuccess(restDoc.data()))
-      })
-      .catch((error) => dispatch(getRestaurantByUsernameFail(error.message)))
-  }
+      if (data.exists) {
+        dispatch(getRestaurantByUsernameSuccess(data.data()))
+      } else { dispatch(getRestaurantByUsernameSuccess()) }
+    })
+    .catch((error) => dispatch(getRestaurantByUsernameFail(error.message)))
+}
+
+const setRestaurantStart = () => ({
+  type: actionTypes.POST_RESTAURANT_START
+})
+
+export const setRestaurantSuccess = (rest) => ({
+  type: actionTypes.POST_RESTAURANT_SUCCESS,
+  payload: { restaurant: rest && { ...rest } }
+})
+
+const setRestaurantFail = (error) => ({
+  type: actionTypes.POST_RESTAURANT_FAIL,
+  payload: { error }
+})
+
+export const setRestaurant = (email, restaurantName) => (dispatch) => {
+  dispatch(setRestaurantStart())
+  const rest = { email, name: restaurantName }
+  const collectionRef = firestore.collection('restaurants').doc(email)
+  collectionRef
+    .set(rest)
+    .then(() => {
+      dispatch(setRestaurantSuccess(rest))
+    })
+    .catch((error) => dispatch(setRestaurantFail(error.message)))
 }
 
 export const signInSuccess = (user) => ({
