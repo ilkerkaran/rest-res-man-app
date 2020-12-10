@@ -1,7 +1,7 @@
 import * as actionTypes from '../actions/actionTypes'
 
 const initialState = {
-  tables: new Array(15)
+  tableLayout: Array.from(Array(150), (x, i) => ({ pos: i }))
 }
 
 const tableReducer = (state = initialState, action) => {

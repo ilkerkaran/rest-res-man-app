@@ -7,6 +7,7 @@ import Spinner from '../components/UI/Spinner/Spinner'
 
 import * as actions from '../store/actions/actionCreators'
 import SetRestaurant from './SetRestaurant'
+import TableEditor from './TableEditor'
 
 const Restaurant = () => {
   const dispatch = useDispatch()
@@ -16,7 +17,12 @@ const Restaurant = () => {
     dispatch(actions.getRestaurant(currentUser.email))
   }, [])
   return userLoading || restaurantLoading ? <Spinner /> : restaurant
-    ? <h1>Restaurant view</h1>
+    ? (
+      <>
+        <h1>Restaurant view</h1>
+        <TableEditor />
+      </>
+    )
     : <SetRestaurant />
 }
 
