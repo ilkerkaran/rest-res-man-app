@@ -40,18 +40,18 @@ export const setRestaurantSuccess = (rest) => ({
   payload: { restaurant: rest && { ...rest } }
 })
 
-export const clearRestaurant = () => ({
-  type: actionTypes.CLEAR_RESTAURANT
-})
-
 const setRestaurantFail = (error) => ({
   type: actionTypes.POST_RESTAURANT_FAIL,
   payload: { error }
 })
 
+export const clearRestaurant = () => ({
+  type: actionTypes.CLEAR_RESTAURANT
+})
+
 export const setRestaurant = (email, restaurantName) => (dispatch) => {
   dispatch(setRestaurantStart())
-  const rest = { email, name: restaurantName }
+  const rest = { email, name: restaurantName, tables: null }
   const collectionRef = firestore.collection('restaurants').doc(email)
   collectionRef
     .set(rest)
@@ -59,6 +59,31 @@ export const setRestaurant = (email, restaurantName) => (dispatch) => {
       dispatch(setRestaurantSuccess(rest))
     })
     .catch((error) => dispatch(setRestaurantFail(error.message)))
+}
+
+const persistTablesStart = () => ({
+  type: actionTypes.PERSIST_TABLES_START
+})
+
+export const persistTablesSuccess = (tables) => ({
+  type: actionTypes.PERSIST_TABLES_SUCCESS,
+  payload: { ...tables }
+})
+
+const persistTablesFail = (error) => ({
+  type: actionTypes.PERSIST_TABLES_FAIL,
+  payload: { error }
+})
+
+export const persistTables = (email, tables) => (dispatch) => {
+  dispatch(persistTablesStart())
+  const collectionRef = firestore.collection('restaurants').doc(email)
+  collectionRef
+    .set({ tables }, { merge: true })
+    .then(() => {
+      dispatch(persistTablesSuccess({ tables }))
+    })
+    .catch((error) => dispatch(persistTablesFail(error.message)))
 }
 
 export const signInSuccess = (user) => ({

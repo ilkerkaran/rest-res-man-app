@@ -12,19 +12,19 @@ const ErrorHandler = ({ children }) => {
   if (restaurant.error) errors.push(restaurant.error)
   if (user.error) errors.push(user.error)
   if (restaurant.error) errors.push(restaurant.error)
-
+  const showErrors = !!errors.length > 0
   const handleClose = () => {
     dispatch(clearRestaurantError())
     dispatch(clearUserError())
   }
-  console.log('errors:', errors)
+  if (showErrors) { console.log('errors:', errors) }
   return (
     <>
       <Modal
         onClose={handleClose}
-        show={!!errors.length > 0}
+        show={showErrors}
       >
-        {errors.map((error, i) => <p key={i}>{error.message}</p>)}
+        {errors.map((error, i) => <p key={i}>{error.message || error}</p>)}
       </Modal>
       {children}
     </>

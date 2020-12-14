@@ -1,10 +1,6 @@
 import React from 'react'
-import { useSelector } from 'react-redux'
-import DraggableGrid from '../components/UI/Drag&Drop/DraggableGrid'
+import TableEditor from '../components/TableEditor/TableEditor'
 
-const TableEditor = () => {
-  const { tableLayout } = useSelector((state) => state.tables)
-  return <DraggableGrid tables={tableLayout} />
-}
+const TableEditorView = () => <TableEditor />
 
-export default TableEditor
+export default TableEditorView
