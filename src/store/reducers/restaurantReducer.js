@@ -4,7 +4,8 @@ import * as actionTypes from '../actions/actionTypes'
 const initialState = {
   restaurant: undefined,
   tables: Array.from(Array(150), () => ({ id: 0 })),
-  nextTableNumber: 1
+  nextTableNumber: 1,
+  reservations: []
 }
 
 const restaurantReducer = (state = initialState, action) => {
@@ -27,11 +28,14 @@ const restaurantReducer = (state = initialState, action) => {
         loading: true
       }
     case actionTypes.GET_RESTAURANT_SUCCESS:
+      console.log('GET_RESTAURANT_SUCCESS', action.payload.restaurant)
       const t = action.payload.restaurant.tables
+      const r = action.payload.restaurant.reservations
       return {
         ...state,
-        restaurant: action.payload.restaurant,
+        restaurant: action.payload.restaurant.name,
         tables: t || [...state.tables], // if rest has no table we want initial tables to stay in state,
+        reservations: r || [],
         nextTableNumber: t ? t.reduce((a, b) => (a.id > b.id ? a : b)).id + 1 : 1,
         loading: false
       }
@@ -49,7 +53,7 @@ const restaurantReducer = (state = initialState, action) => {
     case actionTypes.POST_RESTAURANT_SUCCESS:
       return {
         ...state,
-        restaurant: action.payload.restaurant,
+        restaurant: action.payload.restaurant.name,
         loading: false
       }
     case actionTypes.POST_RESTAURANT_FAIL:
@@ -77,6 +81,23 @@ const restaurantReducer = (state = initialState, action) => {
       return {
         ...state,
         restaurant: null,
+        error: action.payload.error,
+        loading: false
+      }
+    case actionTypes.PERSIST_RESERVATIONS_START:
+      return {
+        ...state,
+        loading: true
+      }
+    case actionTypes.PERSIST_RESERVATIONS_SUCCESS:
+      return {
+        ...state,
+        reservations: action.payload.reservations,
+        loading: false
+      }
+    case actionTypes.PERSIST_RESERVATIONS_FAIL:
+      return {
+        ...state,
         error: action.payload.error,
         loading: false
       }

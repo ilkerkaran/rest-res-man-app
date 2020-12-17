@@ -2,7 +2,6 @@ import { combineReducers } from 'redux'
 import { persistReducer } from 'redux-persist'
 import storage from 'redux-persist/lib/storage'
 import restaurantReducer from './restaurantReducer'
-import tableReducer from './tableReducer'
 import userReducer from './userReducer'
 
 const persistConfig = {
@@ -12,8 +11,7 @@ const persistConfig = {
 
 const rootReducer = combineReducers({
   user: userReducer,
-  restaurant: restaurantReducer,
-  tables: tableReducer
+  restaurant: restaurantReducer
 })
 
 export default persistReducer(persistConfig, rootReducer)

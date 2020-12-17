@@ -140,3 +140,28 @@ export const clearUserError = () => ({
 export const clearRestaurantError = () => ({
   type: actionTypes.CLEAR_RESTAURANT_ERROR
 })
+
+const persistReservationsStart = () => ({
+  type: actionTypes.PERSIST_RESERVATIONS_START
+})
+
+export const persistReservationsSuccess = (reservaitons) => ({
+  type: actionTypes.PERSIST_RESERVATIONS_SUCCESS,
+  payload: { ...reservaitons }
+})
+
+export const persistReservationsFail = (error) => ({
+  type: actionTypes.PERSIST_RESERVATIONS_FAIL,
+  payload: { error }
+})
+
+export const persistReservations = (email, reservations) => (dispatch) => {
+  const collectionRef = firestore.collection('restaurants').doc(email)
+  dispatch(persistReservationsStart())
+  collectionRef
+    .set({ reservations }, { merge: true })
+    .then(() => {
+      dispatch(persistReservationsSuccess({ reservations }))
+    })
+    .catch((error) => dispatch(persistReservationsFail(error.message)))
+}
