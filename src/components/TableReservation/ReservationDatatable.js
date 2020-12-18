@@ -169,7 +169,6 @@ const ReservationDatatable = ({
     { title: 'Customer Name', field: 'customerName' },
     { title: 'Contact Details', field: 'contactDetails' }
   ]
-  console.log('datatable data', data)
   const options = {
     search: true
   }

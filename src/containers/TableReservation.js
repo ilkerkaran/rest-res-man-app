@@ -6,7 +6,7 @@ import React, { useState } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import ReservationDialog from '../components/TableReservation/ReservationDialog'
 import {
-  closeReservationsDialog, openReservationsDialog, persistReservations, persistReservationsFail
+  closeReservationsDialog, openReservationsDialog, persistReservations, persistReservationsFail, selectTable
 } from '../store/actions/actionCreators'
 
 const useStyles = makeStyles((theme) => ({
@@ -44,16 +44,12 @@ const TableReservation = () => {
 
   const { currentUser } = useSelector((state) => state.user)
   const {
-    tables, reservations, isReservationDialogOpen, reservationFilter
+    tables, reservations, isReservationDialogOpen, selectedTable
   } = useSelector((state) => state.restaurant)
   const dispatch = useDispatch()
-  if (!tables) return null
-  reservations.sort((x, y) => x.date - y.date || +x.time - +y.time)
-
-  const [selectedTable, setSelectedTable] = useState()
 
   const handleTableClick = (index) => {
-    setSelectedTable(tables[index])
+    dispatch(selectTable(tables[index]))
     dispatch(openReservationsDialog())
   }
 
@@ -63,24 +59,31 @@ const TableReservation = () => {
 
   const resetState = () => {
     dispatch(closeReservationsDialog())
-    setSelectedTable()
+    dispatch(selectTable())
   }
 
   const handleRowAdd = (data) => new Promise((resolve, reject) => {
     data.date.setHours(+data.time, 0, 0, 0)
     const isDateOccupied = reservations
-      .find((r) => r.time == data.time
-          && r.date == data.date.getTime())
+      .find((r) => r.tableId == selectedTable.id
+      && r.time == data.time
+      && r.date == data.date.getTime())
 
     if (isDateOccupied) {
       const err = new Error('The table is reserved for selected date and time')
       dispatch(persistReservationsFail(err))
       return reject(err)
     }
-    const newData = [...reservations, { ...data, date: data.date.getTime() }]
+    const newData = [...reservations, {
+      ...data,
+      date: data.date.getTime(),
+      tableId: selectedTable.id
+    }]
+    console.log('handleRowAdd triggered', data, reservations)
     dispatch(persistReservations(currentUser.email, newData))
     return resolve(newData)
   })
+
   const handleRowUpdate = (newData, oldData) => new Promise((resolve, reject) => {
     const indexToBeUpdated = reservations
       .findIndex((r) => r.time == oldData.time
@@ -105,6 +108,7 @@ const TableReservation = () => {
     dispatch(persistReservations(currentUser.email, arr))
     return resolve()
   })
+  if (!tables) return null
   return (
     <>
       <Box className={classes.container}>
@@ -135,7 +139,7 @@ const TableReservation = () => {
         ))}
       </Box>
       <ReservationDialog
-        tableNo={selectedTable && `#${selectedTable.id}`}
+        table={selectedTable && selectedTable.id}
         data={reservations}
         open={isReservationDialogOpen}
         onClose={handleDialogClose}

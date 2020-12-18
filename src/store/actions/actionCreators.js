@@ -178,3 +178,8 @@ export const openReservationsDialog = () => ({
 export const closeReservationsDialog = () => ({
   type: actionTypes.CLOSE_RESERVATIONS_DIALOG
 })
+
+export const selectTable = (selectedTable) => ({
+  type: actionTypes.SELECT_TABLE,
+  payload: { selectedTable }
+})

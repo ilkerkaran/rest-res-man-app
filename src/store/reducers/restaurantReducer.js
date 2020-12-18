@@ -7,7 +7,8 @@ const initialState = {
   nextTableNumber: 1,
   reservations: [],
   isReservationDialogOpen: false,
-  reservationFilter: 0
+  reservationFilter: 0,
+  selectedTable: undefined
 }
 
 const restaurantReducer = (state = initialState, action) => {
@@ -117,6 +118,11 @@ const restaurantReducer = (state = initialState, action) => {
       return {
         ...state,
         reservationFilter: action.payload.filter
+      }
+    case actionTypes.SELECT_TABLE:
+      return {
+        ...state,
+        selectedTable: action.payload.selectedTable
       }
     default:
       return state

@@ -4,8 +4,8 @@
 import { Box, makeStyles } from '@material-ui/core'
 import React, { useState } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
-import { persistTables } from '../../store/actions/actionCreators'
-import TableDialog from './TableDialog'
+import { persistTables } from '../store/actions/actionCreators'
+import TableDialog from '../components/TableEditor/TableDialog'
 
 const useStyles = makeStyles((theme) => ({
   container: {

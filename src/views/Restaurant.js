@@ -6,7 +6,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import Spinner from '../components/UI/Spinner/Spinner'
 import * as actions from '../store/actions/actionCreators'
 import SetRestaurant from './SetRestaurant'
-import TableEditor from './TableEditor'
+import TableEditor from '../containers/TableEditor'
 import TableSwitch from '../components/UI/TableSwitch/TableSwitch'
 import TableReservation from '../containers/TableReservation'
 

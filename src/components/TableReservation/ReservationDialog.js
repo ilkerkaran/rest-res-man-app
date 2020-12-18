@@ -19,25 +19,27 @@ const useStyles = makeStyles({
   }
 })
 const ReservationDialog = ({
-  tableNo,
-  data,
   open,
   onClose,
   onRowAdd,
   onRowUpdate,
   onRowDelete
 }) => {
-  const { reservationFilter } = useSelector((state) => state.restaurant)
+  const { reservations, reservationFilter, selectedTable } = useSelector((state) => state.restaurant)
+
   const dispatch = useDispatch()
   const classes = useStyles()
+  reservations.sort((x, y) => x.date - y.date || +x.time - +y.time)
+
   const handleFilterChange = (e, val) => {
     dispatch(setReservationFilter(val))
   }
 
   const currentDate = new Date().getTime()
-  const filteredData = data.filter((r) => (r.date < currentDate && reservationFilter == -1) // past
+  const filteredData = reservations.filter((r) => selectedTable && r.tableId == selectedTable.id
+  && ((r.date < currentDate && reservationFilter == -1) // past
   || (r.date >= currentDate && reservationFilter == 1) // future
-  || reservationFilter == 0) // all
+  || reservationFilter == 0)) // all
 
   return (
     <Dialog
@@ -53,7 +55,7 @@ const ReservationDialog = ({
         />
         <ReservationDatatable
           data={filteredData}
-          title={`${tableNo} Reservations`}
+          title={`#${selectedTable && selectedTable.id} Reservations`}
           onRowAdd={onRowAdd}
           onRowUpdate={onRowUpdate}
           onRowDelete={onRowDelete}
@@ -72,8 +74,6 @@ const ReservationDialog = ({
 export default ReservationDialog
 
 ReservationDialog.propTypes = {
-  data: PropTypes.array,
-  tableNo: PropTypes.string.isRequired,
   open: PropTypes.bool,
   onClose: PropTypes.func,
   onRowAdd: PropTypes.func,
@@ -82,7 +82,6 @@ ReservationDialog.propTypes = {
 }
 
 ReservationDialog.defaultProps = {
-  data: [],
   onClose: null,
   open: false,
   onRowAdd: null,
