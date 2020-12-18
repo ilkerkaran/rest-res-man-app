@@ -1,7 +1,8 @@
 import React from 'react'
 import {
-  FormControlLabel, makeStyles, Radio, RadioGroup
+  makeStyles, Typography
 } from '@material-ui/core'
+import { ToggleButton, ToggleButtonGroup } from '@material-ui/lab'
 import PropTypes from 'prop-types'
 
 const useStyles = makeStyles({
@@ -16,26 +17,22 @@ const useStyles = makeStyles({
 const ReservationFilter = ({ value, onChange }) => {
   const classes = useStyles()
   return (
-    <RadioGroup className={classes.radio} value={value.toString()} onChange={onChange}>
-      <FormControlLabel
-        value="0"
-        control={<Radio color="primary" />}
-        label="All"
-        labelPlacement="bottom"
-      />
-      <FormControlLabel
-        value="-1"
-        control={<Radio color="primary" />}
-        label="Past"
-        labelPlacement="bottom"
-      />
-      <FormControlLabel
-        value="1"
-        control={<Radio color="primary" />}
-        label="Future"
-        labelPlacement="bottom"
-      />
-    </RadioGroup>
+    <ToggleButtonGroup
+      className={classes.radio}
+      value={value || '0'}
+      exclusive
+      onChange={onChange}
+    >
+      <ToggleButton value="-1">
+        <Typography>Past</Typography>
+      </ToggleButton>
+      <ToggleButton value="0">
+        <Typography>All</Typography>
+      </ToggleButton>
+      <ToggleButton value="1">
+        <Typography>Future</Typography>
+      </ToggleButton>
+    </ToggleButtonGroup>
   )
 }
 export default ReservationFilter

@@ -30,8 +30,8 @@ const ReservationDialog = ({
   const { reservationFilter } = useSelector((state) => state.restaurant)
   const dispatch = useDispatch()
   const classes = useStyles()
-  const handleFilterChange = (e) => {
-    dispatch(setReservationFilter(+e.target.value))
+  const handleFilterChange = (e, val) => {
+    dispatch(setReservationFilter(val))
   }
 
   const currentDate = new Date().getTime()
