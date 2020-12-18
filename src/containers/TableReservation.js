@@ -5,7 +5,9 @@ import { Box, makeStyles } from '@material-ui/core'
 import React, { useState } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import ReservationDialog from '../components/TableReservation/ReservationDialog'
-import { persistReservations, persistReservationsFail } from '../store/actions/actionCreators'
+import {
+  closeReservationsDialog, openReservationsDialog, persistReservations, persistReservationsFail
+} from '../store/actions/actionCreators'
 
 const useStyles = makeStyles((theme) => ({
   container: {
@@ -41,16 +43,18 @@ const TableReservation = () => {
   const classes = useStyles()
 
   const { currentUser } = useSelector((state) => state.user)
-  const { tables, reservations } = useSelector((state) => state.restaurant)
+  const {
+    tables, reservations, isReservationDialogOpen, reservationFilter
+  } = useSelector((state) => state.restaurant)
   const dispatch = useDispatch()
   if (!tables) return null
   reservations.sort((x, y) => x.date - y.date || +x.time - +y.time)
+
   const [selectedTable, setSelectedTable] = useState()
-  const [isDialogOpen, setIsDialogOpen] = useState()
 
   const handleTableClick = (index) => {
     setSelectedTable(tables[index])
-    setIsDialogOpen(true)
+    dispatch(openReservationsDialog())
   }
 
   const handleDialogClose = () => {
@@ -58,20 +62,20 @@ const TableReservation = () => {
   }
 
   const resetState = () => {
-    setIsDialogOpen(false)
+    dispatch(closeReservationsDialog())
     setSelectedTable()
   }
 
   const handleRowAdd = (data) => new Promise((resolve, reject) => {
-    data.date.setHours(0, 0, 0, 0)
+    data.date.setHours(+data.time, 0, 0, 0)
     const isDateOccupied = reservations
       .find((r) => r.time == data.time
           && r.date == data.date.getTime())
-    console.log('isDateOccupied', isDateOccupied, data.date.getTime(), data)
 
     if (isDateOccupied) {
       const err = new Error('The table is reserved for selected date and time')
       dispatch(persistReservationsFail(err))
+      return reject(err)
     }
     const newData = [...reservations, { ...data, date: data.date.getTime() }]
     dispatch(persistReservations(currentUser.email, newData))
@@ -133,7 +137,7 @@ const TableReservation = () => {
       <ReservationDialog
         tableNo={selectedTable && `#${selectedTable.id}`}
         data={reservations}
-        open={isDialogOpen}
+        open={isReservationDialogOpen}
         onClose={handleDialogClose}
         onRowAdd={handleRowAdd}
         onRowUpdate={handleRowUpdate}

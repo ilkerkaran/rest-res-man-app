@@ -165,3 +165,16 @@ export const persistReservations = (email, reservations) => (dispatch) => {
     })
     .catch((error) => dispatch(persistReservationsFail(error.message)))
 }
+
+export const setReservationFilter = (filter) => ({
+  type: actionTypes.SET_RESERVATIONS_FILTER,
+  payload: { filter }
+})
+
+export const openReservationsDialog = () => ({
+  type: actionTypes.OPEN_RESERVATIONS_DIALOG
+})
+
+export const closeReservationsDialog = () => ({
+  type: actionTypes.CLOSE_RESERVATIONS_DIALOG
+})

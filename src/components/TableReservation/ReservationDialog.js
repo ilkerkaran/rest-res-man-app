@@ -5,8 +5,10 @@ import {
 import { Check as CheckIcon } from '@material-ui/icons'
 import PropTypes from 'prop-types'
 
+import { useDispatch, useSelector } from 'react-redux'
 import ReservationFilter from './ReservationFilter'
 import ReservationDatatable from './ReservationDatatable'
+import { setReservationFilter } from '../../store/actions/actionCreators'
 
 const useStyles = makeStyles({
   dialog: {
@@ -25,11 +27,17 @@ const ReservationDialog = ({
   onRowUpdate,
   onRowDelete
 }) => {
-  const [filter, setFilter] = useState()
+  const { reservationFilter } = useSelector((state) => state.restaurant)
+  const dispatch = useDispatch()
   const classes = useStyles()
   const handleFilterChange = (e) => {
-    setFilter(e.target.value)
+    dispatch(setReservationFilter(+e.target.value))
   }
+
+  const currentDate = new Date().getTime()
+  const filteredData = data.filter((r) => (r.date < currentDate && reservationFilter == -1) // past
+  || (r.date >= currentDate && reservationFilter == 1) // future
+  || reservationFilter == 0) // all
 
   return (
     <Dialog
@@ -41,10 +49,10 @@ const ReservationDialog = ({
       <DialogContent>
         <ReservationFilter
           onChange={handleFilterChange}
-          value={filter}
+          value={reservationFilter}
         />
         <ReservationDatatable
-          data={data}
+          data={filteredData}
           title={`${tableNo} Reservations`}
           onRowAdd={onRowAdd}
           onRowUpdate={onRowUpdate}

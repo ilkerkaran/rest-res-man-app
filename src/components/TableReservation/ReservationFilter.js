@@ -16,9 +16,9 @@ const useStyles = makeStyles({
 const ReservationFilter = ({ value, onChange }) => {
   const classes = useStyles()
   return (
-    <RadioGroup className={classes.radio} value={value} onChange={onChange}>
+    <RadioGroup className={classes.radio} value={value.toString()} onChange={onChange}>
       <FormControlLabel
-        value=""
+        value="0"
         control={<Radio color="primary" />}
         label="All"
         labelPlacement="bottom"

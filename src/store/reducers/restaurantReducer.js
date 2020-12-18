@@ -5,7 +5,9 @@ const initialState = {
   restaurant: undefined,
   tables: Array.from(Array(150), () => ({ id: 0 })),
   nextTableNumber: 1,
-  reservations: []
+  reservations: [],
+  isReservationDialogOpen: false,
+  reservationFilter: 0
 }
 
 const restaurantReducer = (state = initialState, action) => {
@@ -100,6 +102,21 @@ const restaurantReducer = (state = initialState, action) => {
         ...state,
         error: action.payload.error,
         loading: false
+      }
+    case actionTypes.OPEN_RESERVATIONS_DIALOG:
+      return {
+        ...state,
+        isReservationDialogOpen: true
+      }
+    case actionTypes.CLOSE_RESERVATIONS_DIALOG:
+      return {
+        ...state,
+        isReservationDialogOpen: false
+      }
+    case actionTypes.SET_RESERVATIONS_FILTER:
+      return {
+        ...state,
+        reservationFilter: action.payload.filter
       }
     default:
       return state
