@@ -9,17 +9,15 @@ const initialState = {
   isReservationDialogOpen: false,
   reservationFilter: 0,
   selectedTable: undefined,
-  tableLayoutSwitch: false
+  tableLayoutSwitch: false,
+  isTried: false
 }
 
 const restaurantReducer = (state = initialState, action) => {
   switch (action.type) {
     case actionTypes.CLEAR_RESTAURANT:
       return {
-        ...state,
-        restaurant: null,
-        error: null,
-        loading: false
+        ...initialState
       }
     case actionTypes.CLEAR_RESTAURANT_ERROR:
       return {
@@ -32,7 +30,12 @@ const restaurantReducer = (state = initialState, action) => {
         loading: true
       }
     case actionTypes.GET_RESTAURANT_SUCCESS:
-      console.log('GET_RESTAURANT_SUCCESS', action.payload.restaurant)
+      if (!action.payload.restaurant) {
+        return {
+          ...state,
+          loading: false
+        }
+      }
       const t = action.payload.restaurant.tables
       const r = action.payload.restaurant.reservations
       return {
@@ -129,6 +132,11 @@ const restaurantReducer = (state = initialState, action) => {
       return {
         ...state,
         tableLayoutSwitch: !state.tableLayoutSwitch
+      }
+    case actionTypes.MARK_TRIED:
+      return {
+        ...state,
+        isTried: true
       }
     default:
       return state

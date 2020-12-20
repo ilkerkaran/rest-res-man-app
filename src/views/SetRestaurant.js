@@ -5,13 +5,13 @@ import Form from '../components/UI/Form/Form'
 import Spinner from '../components/UI/Spinner/Spinner'
 import {
   getRestaurant,
+  markTried,
   setRestaurant
 } from '../store/actions/actionCreators'
 
 const SetRestaurant = () => {
   const { currentUser, loading: userLoading } = useSelector((state) => state.user)
-  const { restaurant, loading: restaurantLoading } = useSelector((state) => state.restaurant)
-
+  const { restaurant, loading: restaurantLoading, isTried } = useSelector((state) => state.restaurant)
   const dispatch = useDispatch()
   const formInputConfig = [
     {
@@ -26,7 +26,10 @@ const SetRestaurant = () => {
   }
 
   useEffect(() => {
-    if (!restaurant) { dispatch(getRestaurant(currentUser.email)) }
+    if (!isTried) {
+      dispatch(markTried())
+      dispatch(getRestaurant(currentUser.email))
+    }
   }, [])
 
   const form = restaurantLoading ? <Spinner /> : (

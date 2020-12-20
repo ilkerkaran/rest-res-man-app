@@ -39,6 +39,7 @@ function App() {
     <Suspense fallback={<div>Loading...</div>}>
       <Route path="/login" exact render={() => <Auth isSignUp={false} />} />
       <Route path="/signup" exact render={() => <Auth isSignUp />} />
+      <Redirect to="/login" />
     </Suspense>
   )
   useEffect(() => {

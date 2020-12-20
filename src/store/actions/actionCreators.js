@@ -187,3 +187,7 @@ export const selectTable = (selectedTable) => ({
 export const toggleLayoutSwitch = () => ({
   type: actionTypes.TOGGLE_LAYOUT_SWITCH
 })
+
+export const markTried = () => ({
+  type: actionTypes.MARK_TRIED
+})
