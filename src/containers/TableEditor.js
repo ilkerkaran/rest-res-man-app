@@ -19,8 +19,7 @@ const useStyles = makeStyles((theme) => ({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
-    marginLeft: theme.spacing(-1),
-    marginRight: theme.spacing(-1)
+    margin: 'auto'
   },
   itemContainer: {
     padding: '2px'

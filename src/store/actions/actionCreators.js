@@ -183,3 +183,7 @@ export const selectTable = (selectedTable) => ({
   type: actionTypes.SELECT_TABLE,
   payload: { selectedTable }
 })
+
+export const toggleLayoutSwitch = () => ({
+  type: actionTypes.TOGGLE_LAYOUT_SWITCH
+})

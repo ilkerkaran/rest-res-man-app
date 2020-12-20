@@ -6,34 +6,19 @@ import { useDispatch, useSelector } from 'react-redux'
 import Spinner from '../components/UI/Spinner/Spinner'
 import * as actions from '../store/actions/actionCreators'
 import SetRestaurant from './SetRestaurant'
-import TableEditor from '../containers/TableEditor'
-import TableSwitch from '../components/UI/TableSwitch/TableSwitch'
-import TableReservation from '../containers/TableReservation'
+import RestaurantContainer from '../containers/Restaurant'
 
 const Restaurant = () => {
   const dispatch = useDispatch()
   const { restaurant, loading: restaurantLoading } = useSelector((state) => state.restaurant)
   const { currentUser, loading: userLoading } = useSelector((state) => state.user)
-  const [layoutSwitch, setLayoutSwitch] = useState()
 
-  const handleSwitchChange = () => {
-    setLayoutSwitch((prev) => !prev)
-  }
   useEffect(() => {
     dispatch(actions.getRestaurant(currentUser.email))
   }, [])
   return userLoading || restaurantLoading ? <Spinner /> : restaurant
     ? (
-      <>
-        <TableSwitch
-          checked={layoutSwitch}
-          onChange={handleSwitchChange}
-        />
-        {layoutSwitch
-          ? <TableReservation />
-          : <TableEditor />}
-
-      </>
+      <RestaurantContainer />
     )
     : <SetRestaurant />
 }

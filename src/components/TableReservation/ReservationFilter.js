@@ -6,7 +6,7 @@ import { ToggleButton, ToggleButtonGroup } from '@material-ui/lab'
 import PropTypes from 'prop-types'
 
 const useStyles = makeStyles({
-  radio: {
+  toggleGroup: {
     width: '100%',
     display: 'flex',
     flexDirection: 'row',
@@ -18,7 +18,7 @@ const ReservationFilter = ({ value, onChange }) => {
   const classes = useStyles()
   return (
     <ToggleButtonGroup
-      className={classes.radio}
+      className={classes.toggleGroup}
       value={value || '0'}
       exclusive
       onChange={onChange}

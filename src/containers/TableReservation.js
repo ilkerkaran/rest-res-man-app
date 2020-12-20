@@ -2,7 +2,7 @@
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 /* eslint-disable react/prop-types */
 import { Box, makeStyles } from '@material-ui/core'
-import React, { useState } from 'react'
+import React from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import ReservationDialog from '../components/TableReservation/ReservationDialog'
 import {
@@ -21,8 +21,7 @@ const useStyles = makeStyles((theme) => ({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
-    marginLeft: theme.spacing(-1),
-    marginRight: theme.spacing(-1)
+    margin: 'auto'
   },
   itemContainer: {
     padding: '2px'

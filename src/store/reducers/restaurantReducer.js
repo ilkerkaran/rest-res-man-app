@@ -8,7 +8,8 @@ const initialState = {
   reservations: [],
   isReservationDialogOpen: false,
   reservationFilter: 0,
-  selectedTable: undefined
+  selectedTable: undefined,
+  tableLayoutSwitch: false
 }
 
 const restaurantReducer = (state = initialState, action) => {
@@ -123,6 +124,11 @@ const restaurantReducer = (state = initialState, action) => {
       return {
         ...state,
         selectedTable: action.payload.selectedTable
+      }
+    case actionTypes.TOGGLE_LAYOUT_SWITCH:
+      return {
+        ...state,
+        tableLayoutSwitch: !state.tableLayoutSwitch
       }
     default:
       return state

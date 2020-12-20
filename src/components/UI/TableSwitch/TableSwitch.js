@@ -40,7 +40,14 @@ const useStyles = makeStyles((theme) => ({
 const TableSwitch = ({ checked, onChange }) => {
   const classes = useStyles()
   return (
-    <Grid component="label" container justify="center" alignItems="center" spacing={1}>
+    <Grid
+      style={{ paddingLeft: '100px' }}
+      component="label"
+      container
+      justify="center"
+      alignItems="center"
+      spacing={1}
+    >
       <Grid item>Table Layout</Grid>
       <Grid item>
         <Switch className={classes.swtich} checked={checked} onChange={onChange} />
